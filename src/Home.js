@@ -25,6 +25,9 @@ function Home({ drinks, snacks }) {
               Now offering a selection of {snacks.length} different
               snacks and {drinks.length} different drinks!
             </h4>
+            <h5>Don't see what you'd like? Feel free to add to our
+              menu!
+            </h5>
           </CardTitle>
         </CardBody>
       </Card>
