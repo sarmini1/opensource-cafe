@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <section
+    class="col-md-4"
+  >
+    <div
+      class="card"
+    >
+      <div
+        class="card-body"
+      >
+        <div
+          class="font-weight-bold text-center card-title"
+        >
+           Menu
+        </div>
+        <p
+          class="card-text"
+        >
+          Please enjoy some of our 
+           listed below!
+        </p>
+        <ul
+          class="list-group"
+        >
+          <a
+            href="/undefined/nachos"
+          >
+            <li
+              class="list-group-item"
+            >
+              Nachos
+            </li>
+          </a>
+          <a
+            href="/undefined/hummus"
+          >
+            <li
+              class="list-group-item"
+            >
+              Hummus
+            </li>
+          </a>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+`;

@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <div
+    class="NewItemForm-container"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-1 col-sm-2 col-lg-4"
+      />
+      <div
+        class="col-10 col-sm-8 col-lg-4"
+      >
+        <div
+          class="card"
+        >
+          <div
+            class="card-body"
+          >
+            <div
+              class="font-weight-bold text-center card-title"
+            >
+              <h3>
+                Add To Our Menu!
+              </h3>
+            </div>
+            <form
+              class="NewItemForm-form"
+            >
+              <label
+                for="NewItemForm-type"
+              >
+                Type of Item:
+              </label>
+              <select
+                class="NewItemForm-type"
+                name="type"
+              >
+                <option
+                  value="default"
+                >
+                  Options:
+                </option>
+                <option
+                  value="snack"
+                >
+                  Snack
+                </option>
+                <option
+                  value="drink"
+                >
+                  Drink
+                </option>
+              </select>
+              <label
+                for="NewItemForm-name"
+              >
+                Name:
+              </label>
+              <input
+                id="NewItemForm-name"
+                name="name"
+                required=""
+                type="text"
+                value=""
+              />
+              <label
+                for="NewItemForm-recipe"
+              >
+                Recipe:
+              </label>
+              <input
+                id="NewItemForm-recipe"
+                name="recipe"
+                required=""
+                type="text"
+                value=""
+              />
+              <label
+                for="NewItemForm-description"
+              >
+                Description:
+              </label>
+              <input
+                id="NewItemForm-description"
+                name="description"
+                required=""
+                type="text"
+                value=""
+              />
+              <label
+                for="NewItemForm-serving-instructions"
+              >
+                Serving Instructions:
+              </label>
+              <input
+                id="NewItemForm-serving-instructions"
+                name="serve"
+                required=""
+                type="text"
+                value=""
+              />
+              <button
+                class="btn btn-secondary"
+                type="submit"
+              >
+                Add Item!
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-1 col-sm-2 col-lg-4"
+      />
+    </div>
+  </div>
+</div>
+`;

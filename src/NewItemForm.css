@@ -1,0 +1,20 @@
+/** Add some display, size, padding, and color properties to form components*/
+input, select {
+  width: 100%;
+  padding: 8px 15px;
+  margin: 5px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn {
+  background-color: #686666;
+  margin: 5px;
+  color: white;
+}
+
+label {
+  color: #f7f2f2;
+  line-height: 2px;
+}
