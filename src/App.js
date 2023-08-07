@@ -3,21 +3,21 @@ import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import SnackOrBoozeApi from "./Api";
 import NavBar from "./NavBar";
-import Routes from "./Routes";
+import RoutesList from "./RoutesList";
 import Error from "./Error";
 
 /** App
- * 
+ *
  * Props:
  * -none
- * 
+ *
  * State:
  * - isLoading: boolean
  * - snacks: array of objects [{id, name, description, recipe, serve}...]
  * - drinks: array of objects [{id, name, description, recipe, serve}...]
  * - fetchSnacksError: null or ""
  * - fetchDrinksError: null or ""
- * 
+ *
  * App --> NavBar, Routes
  */
 function App() {
@@ -86,7 +86,7 @@ function App() {
         <main>
           {fetchSnacksError && <Error error={fetchSnacksError} />}
           {fetchDrinksError && <Error error={fetchDrinksError} />}
-          <Routes
+          <RoutesList
             drinks={drinks}
             snacks={snacks}
             addItem={addItem} />

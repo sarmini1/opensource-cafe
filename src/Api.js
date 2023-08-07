@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_API_URL = "http://localhost:5000";
+const BASE_API_URL = "http://localhost:5001";
 
 /**
  * Class holds static methods for making API calls to the

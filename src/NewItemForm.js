@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Error from "./Error";
 import {
   Card,
@@ -19,22 +19,22 @@ const initialFormData = {
 }
 
 /** NewItemForm
- * 
+ *
  * Props:
  * - addItem: ()
- * 
+ *
  * State:
  * - NewItemFormData: {}
  * - error: null or ""
  * - isSuccessful: boolean
- * 
+ *
  * App --> NavBar, Routes --> NewItemForm
  */
 function NewItemForm({ addItem }) {
 
   const [newItemFormData, setNewItemFormData] = useState(initialFormData);
   const [error, setError] = useState(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   //Updates newItemFormData when a change event occurs
   function handleChange(evt) {
@@ -69,7 +69,7 @@ function NewItemForm({ addItem }) {
     try {
       await addItem(newItemFormData);
       setError(null);
-      history.push(`/${newItemFormData.type}s`);
+      navigate(`/${newItemFormData.type}s`)
     } catch (err) {
       setError(err);
     }

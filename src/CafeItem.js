@@ -1,23 +1,23 @@
 import React from "react";
-import { Redirect, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { Card, CardBody, CardTitle, CardText } from "reactstrap";
 
 /**CafeItem
- * 
+ *
  * Props:
  * - items: array of objects [{id, name, description, recipe, serve}...]
  * - cantFind: string
- * 
+ *
  * State:
  * - none
- * 
+ *
  * App --> NavBar, Routes --> CafeItem
  */
 function CafeItem({ items, cantFind }) {
   const { id } = useParams();
 
   let item = items.find(item => item.id === id);
-  if (!item) return <Redirect to={cantFind} />;
+  if (!item) return <Navigate to={cantFind} />;
 
   return (
     <section>
