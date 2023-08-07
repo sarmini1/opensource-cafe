@@ -56,6 +56,7 @@ function RoutesList({ drinks, snacks, addItem }) {
         element={<NewItemForm addItem={addItem}/>}
       />
       <Route
+        path="*"
         element={<NotFound />}
       />
     </Routes>
