@@ -15,7 +15,7 @@ it("matches snapshot", function () {
 it('displays appropriate links', function () {
   const { getByText } = render(<MemoryRouter><NavBar /></MemoryRouter>);
 
-  const homeLink = getByText(/Snack or Booze/i);
+  const homeLink = getByText(/openSource Cafe/i);
   expect(homeLink).toBeInTheDocument();
 
   const snackLink = getByText(/Snacks/i);

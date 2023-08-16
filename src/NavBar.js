@@ -4,20 +4,20 @@ import { NavLink } from "react-router-dom";
 import { Navbar, Nav, NavItem } from "reactstrap";
 
 /** NavBar
- * 
+ *
  * Props:
  * - none
- * 
+ *
  * State:
  * - none
- * 
+ *
  * App --> NavBar
  */
 function NavBar() {
   return (
-    <div>
+    <div className="NavBar">
       <Navbar expand="md">
-        <NavLink exact to="/" className="navbar-brand">
+        <NavLink to="/" className="navbar-brand">
           openSource Cafe
         </NavLink>
 

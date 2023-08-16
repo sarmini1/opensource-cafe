@@ -26,6 +26,9 @@ exports[`matches snapshot 1`] = `
             2
              different drinks!
           </h4>
+          <h5>
+            Don't see what you'd like? Feel free to add to our menu!
+          </h5>
         </div>
       </div>
     </div>
