@@ -6,19 +6,19 @@ import {
 } from "reactstrap";
 
 /** NotFound
- * 
+ *
  * Props:
  * - none
- * 
+ *
  * State:
  * - none
- * 
+ *
  * App --> Routes --> NotFound
  */
 function NotFound() {
 
   return (
-    <div>
+    <div className="NotFound">
       <Card>
         <CardBody>
           <CardTitle className="font-weight-bold text-center">
@@ -28,7 +28,7 @@ function NotFound() {
         </CardBody>
       </Card>
     </div>
-  )
+  );
 
 }
 

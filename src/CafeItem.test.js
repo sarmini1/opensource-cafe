@@ -17,14 +17,22 @@ const testSnacks = [
     "description": "Sure to impress your vegan friends!",
     "recipe": "Purchase one container of hummus.",
     "serve": "Place unceremoniously on the table, along with pita bread."
-  }];
+  }
+];
 
-  it('mounts without crashing', function () {
-    render(<MemoryRouter><CafeItem items={testSnacks} cantFind={"/snacks"}/></MemoryRouter>);
-  });
-  
-  it("matches snapshot", function () {
-    const {debug, container} = render(<MemoryRouter><CafeItem items={testSnacks} cantFind={"/snacks"}/></MemoryRouter>);
-    debug(container);
-    expect(container).toMatchSnapshot();
-  });
+it('mounts without crashing', function () {
+  render(
+    <MemoryRouter>
+      <CafeItem items={testSnacks} cantFind={"/snacks"} />
+    </MemoryRouter>
+  );
+});
+
+it("matches snapshot", function () {
+  const { container } = render(
+    <MemoryRouter>
+      <CafeItem items={testSnacks} cantFind={"/snacks"} />
+    </MemoryRouter>
+  );
+  expect(container).toMatchSnapshot();
+});

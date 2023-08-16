@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <div
+    class="NotFound"
+  >
+    <div
+      class="card"
+    >
+      <div
+        class="card-body"
+      >
+        <div
+          class="font-weight-bold text-center card-title"
+        >
+          <h1>
+            This page could not be found.
+          </h1>
+        </div>
+        <h2>
+          To return home, click 
+          <a
+            href="/"
+          >
+            here.
+          </a>
+        </h2>
+      </div>
+    </div>
+  </div>
+</div>
+`;
