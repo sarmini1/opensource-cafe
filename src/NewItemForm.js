@@ -36,7 +36,7 @@ function NewItemForm({ addItem }) {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  //Updates newItemFormData when a change event occurs
+  // Updates newItemFormData when a change event occurs
   function handleChange(evt) {
     const { name, value } = evt.target;
     setNewItemFormData(currData => ({ ...currData, [name]: value }));
@@ -45,7 +45,7 @@ function NewItemForm({ addItem }) {
     }
   }
 
-  //Adds additional id field to newItemFormData, equal to the
+  // Adds additional id field to newItemFormData, equal to the
   // item's name, lower case, spaces replaced with dashes
   function setItemID() {
     setNewItemFormData(currData => ({
@@ -54,7 +54,7 @@ function NewItemForm({ addItem }) {
     }));
   }
 
-  //When form is submitted, attempts to add the item via the
+  // When form is submitted, attempts to add the item via the
   // addItem() function passed from App.
   async function handleSubmit(evt) {
     evt.preventDefault();
