@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <div
+    class="Error alert alert-danger"
+  >
+    <h3>
+      An error occurred:
+    </h3>
+    test error
+  </div>
+</div>
+`;
