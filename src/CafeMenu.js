@@ -11,21 +11,21 @@ import {
 } from "reactstrap";
 
 /**CafeMenu
- * 
+ *
  * Props:
  * - type: string
  * - items: array of objects [{id, name, description, recipe, serve}...]
  * - title: string
- * 
+ *
  * State:
  * - none
- * 
+ *
  * App --> NavBar, Routes --> CafeMenu
  */
 function CafeMenu({ type, items, title }) {
 
   return (
-    <section className="col-md-4">
+    <section className="CafeMenu col-md-4">
       <Card>
         <CardBody>
           <CardTitle className="font-weight-bold text-center">

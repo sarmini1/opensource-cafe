@@ -3,7 +3,7 @@
 exports[`matches snapshot 1`] = `
 <div>
   <section
-    class="col-md-4"
+    class="CafeMenu col-md-4"
   >
     <div
       class="card"

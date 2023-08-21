@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { MemoryRouter } from "react-router-dom";
-import CafeItem from "./CafeMenu";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
+import CafeItem from "./CafeItem";
+import CafeMenu from './CafeMenu';
 
 const testSnacks = [
   {
@@ -35,4 +36,52 @@ it("matches snapshot", function () {
     </MemoryRouter>
   );
   expect(container).toMatchSnapshot();
+});
+
+it("renders appropriate item content from URL parameter", function () {
+  const { container } = render(
+    <MemoryRouter initialEntries={["/snacks/nachos"]}>
+      <Routes>
+        <Route path="/snacks/:id" element={
+          <CafeItem
+            items={testSnacks}
+            cantFind={('/snacks')}
+          />}
+        >
+        </Route>
+      </Routes>
+    </MemoryRouter>
+  );
+
+  expect(container).toContainHTML("Cover expensive, organic tortilla chips with Cheez Whiz.");
+});
+
+it("navigates back to snacks page when item can't be found", function () {
+  const { container } = render(
+    <MemoryRouter initialEntries={["/snacks/fake-snack"]}>
+      <Routes>
+        <Route
+          path="/snacks/:id"
+          element={
+            <CafeItem
+              items={testSnacks}
+              cantFind={('/snacks')}
+            />}
+        >
+        </Route>
+        <Route
+          path="/snacks"
+          element={
+            <CafeMenu
+              type="snacks"
+              items={testSnacks}
+              title="Snacks"
+            />}
+        />
+      </Routes>
+    </MemoryRouter>
+  );
+
+  expect(container).toContainHTML('Please enjoy some of our snacks listed below!');
+  expect(container).not.toContainHTML('CafeItem');
 });
