@@ -32,4 +32,19 @@ const testDrinks = [
   }
 ];
 
-export { testDrinks, testSnacks };
+const newSnack = {
+  "id": "new-snack",
+  "name": "New Snack!",
+  "description": "New snack description.",
+  "recipe": "Just have fun out there.",
+  "serve": "All day"
+}
+
+const placeholderFunction = () => {};
+
+export {
+  testDrinks,
+  testSnacks,
+  placeholderFunction,
+  newSnack
+};

@@ -1,41 +1,79 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from "react-router-dom";
+import { fireEvent } from '@testing-library/react';
+import { render, unmountComponentAtNode } from "react-dom";
 import { act } from 'react-dom/test-utils';
+import { MemoryRouter } from "react-router-dom";
 
-
+import * as fakeData from './testingSeed/fakeData';
+import SnackOrBoozeApi from './Api';
 import NewItemForm from "./NewItemForm";
+import App from './App';
 
-const addItemTest = () => { };
+let container = null;
 
-it('mounts without crashing', function () {
-  render(<MemoryRouter><NewItemForm addItem={addItemTest} /></MemoryRouter>);
+beforeEach(() => {
+  // setup a DOM element as a render target
+  container = document.createElement("div");
+  console.log(document);
+  document.body.appendChild(container);
 });
 
-it("matches snapshot", function () {
-  const { debug, container } = render(
-    <MemoryRouter><NewItemForm addItem={addItemTest} /></MemoryRouter>
-  );
+afterEach(() => {
+  // cleanup on exiting
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
+});
 
-  debug(container);
+
+it('mounts without crashing', async function () {
+  await act(async () => {
+    render(
+      <MemoryRouter>
+        <NewItemForm addItem={fakeData.placeholderFunction} />
+      </MemoryRouter>,
+      container
+    );
+  });
+});
+
+it("matches snapshot", async function () {
+  await act(async () => {
+    render(
+      <MemoryRouter>
+        <NewItemForm addItem={fakeData.placeholderFunction} />
+      </MemoryRouter>,
+      container
+    );
+  });
+
   expect(container).toMatchSnapshot();
 });
 
-it("displays a form to add a new item", function () {
-  const { container } = render(
-    <MemoryRouter><NewItemForm addItem={addItemTest} /></MemoryRouter>
-  );
+it("displays a form to add a new item", async function () {
+  await act(async () => {
+    render(
+      <MemoryRouter>
+        <NewItemForm addItem={fakeData.placeholderFunction} />
+      </MemoryRouter>,
+      container
+    );
+  });
 
   const form = container.querySelector(".NewItemForm-form");
   expect(form).toBeInTheDocument();
   expect(form).toContainHTML('<label for="NewItemForm-type">Type of Item:</label>');
 });
 
-it("displays user input as it changes", function () {
-  const { container } = render(
-    <MemoryRouter><NewItemForm addItem={addItemTest} /></MemoryRouter>
-  );
-
+it("displays user input as it changes", async function () {
+  await act(async () => {
+    render(
+      <MemoryRouter>
+        <NewItemForm addItem={fakeData.placeholderFunction} />
+      </MemoryRouter>,
+      container
+    );
+  });
   const form = container.querySelector(".NewItemForm-form");
   const nameInput = container.querySelector("#NewItemForm-name");
   const recipeInput = container.querySelector("#NewItemForm-recipe");
@@ -50,39 +88,71 @@ it("displays user input as it changes", function () {
 
 });
 
-// it("submits successfully with valid inputs", function () {
-//   const { debug, container } = render(
-//     <MemoryRouter><NewItemForm addItem={addItemTest} /></MemoryRouter>
-//   );
+it("submits successfully with valid inputs", async function () {
 
-//   const form = container.querySelector(".NewItemForm-form");
+  // mock functions called in the effect that runs after App renders
+  jest
+    .spyOn(SnackOrBoozeApi, "getItems")
+    .mockImplementationOnce(() => Promise.resolve(fakeData.testSnacks))
+    .mockImplementationOnce(() => Promise.resolve(fakeData.testDrinks));
 
-//   const typeInput = container.querySelector(".NewItemForm-type");
-//   const nameInput = container.querySelector("#NewItemForm-name");
-//   const recipeInput = container.querySelector("#NewItemForm-recipe");
-//   const descriptionInput = container.querySelector("#NewItemForm-description");
-//   const servingInsInput = container.querySelector("#NewItemForm-serving-instructions");
+  // mock axios call inside add item function that runs when form is submitted
+  const mockAddItem =
+    jest
+      .spyOn(SnackOrBoozeApi, "addItem")
+      .mockImplementationOnce(() => Promise.resolve(fakeData.newSnack));
 
-//   // debug(container);
-//   // console.log(typeInput);
-//   fireEvent.change(typeInput, { target: { value: 'snack' } });
-//   fireEvent.input(nameInput, { target: { value: 'test name input change' } });
-//   fireEvent.input(recipeInput, { target: { value: 'test recipe input change' } });
-//   fireEvent.input(descriptionInput, { target: { value: 'test description input change' } });
-//   fireEvent.input(servingInsInput, { target: { value: 'test serving ins input change' } });
+  await act(async () => {
+    render(<App />, container);
+  });
+
+  const newItemFormLink = container.querySelector('.NavLink-new-item');
+  fireEvent.click(newItemFormLink);
+
+  const form = container.querySelector(".NewItemForm-form");
+  expect(container).toContainElement(form);
+
+  const typeInput = container.querySelector(".NewItemForm-type");
+  const nameInput = container.querySelector("#NewItemForm-name");
+  const recipeInput = container.querySelector("#NewItemForm-recipe");
+  const descriptionInput = container.querySelector("#NewItemForm-description");
+  const servingInsInput = container.querySelector("#NewItemForm-serving-instructions");
+
+  await act(async () => {
+    fireEvent.change(typeInput, { target: { value: 'snack' } });
+    fireEvent.input(nameInput, { target: { value: 'test name input' } });
+    fireEvent.input(recipeInput, { target: { value: 'test recipe input' } });
+    fireEvent.input(descriptionInput, { target: { value: 'test description input' } });
+    fireEvent.input(servingInsInput, { target: { value: 'test serving ins input' } });
+
+    fireEvent.submit(form);
+  });
+
+  expect(mockAddItem).toHaveBeenCalledTimes(1);
+  expect(container).toContainHTML('Please enjoy some of our snacks listed below!');
+  expect(container).toContainHTML('New Snack!');
+  expect(container).not.toContainElement(form);
+});
 
 
-//   act(() => {
-//     /* fire events that update state */
-//     fireEvent.submit(form);
-//   });
-
-  // expect(addItemTest).toBeCalledTimes(1);
-  // expect(form).toContainHTML('test name input change');
-
-
-  // expect(form).toContainHTML('test recipe input change');
-
-// });
-
-
+  // const { container } = render(
+  //   <MemoryRouter initialEntries={["/add"]}>
+  //     <Routes>
+  //       <Route
+  //         path="/snacks"
+  //         element={
+  //           <CafeMenu
+  //             type="snacks"
+  //             items={fakeData.testSnacks}
+  //             title="Snacks"
+  //           />}
+  //       >
+  //       </Route>
+  //       <Route
+  //         path="/add"
+  //         element={<NewItemForm addItem={fakeData.placeholderFunction} />}
+  //       >
+  //       </Route>
+  //     </Routes>
+  //   </MemoryRouter>
+  // );

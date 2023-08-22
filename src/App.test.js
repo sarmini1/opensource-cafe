@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from 'react-dom/test-utils';
-// import { MemoryRouter, Routes, Route } from "react-router-dom";
+
 import SnackOrBoozeApi from './Api';
 import App from "./App";
 import { testDrinks, testSnacks } from './testingSeed/fakeData';
