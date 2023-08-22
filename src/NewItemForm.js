@@ -16,7 +16,7 @@ const initialFormData = {
   recipe: "",
   description: "",
   serve: ""
-}
+};
 
 /** NewItemForm
  *
@@ -33,7 +33,6 @@ const initialFormData = {
 function NewItemForm({ addItem }) {
 
   const [newItemFormData, setNewItemFormData] = useState(initialFormData);
-  // const [error, setError] = useState(null);
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
@@ -63,7 +62,6 @@ function NewItemForm({ addItem }) {
 
     //Fail fast and check that a valid type was selected
     if (!newItemFormData.type || newItemFormData.type === "default") {
-      // setError("Please ensure an item type is selected.");
       setErrors(errs => [...errs, "Please ensure an item type is selected."]);
       return;
     }
@@ -71,9 +69,8 @@ function NewItemForm({ addItem }) {
     try {
       await addItem(newItemFormData);
       setErrors([]);
-      navigate(`/${newItemFormData.type}s`)
+      navigate(`/${newItemFormData.type}s`);
     } catch (err) {
-      // setError(err);
       setErrors(errs => [...errs, "Couldn't add new item to DB."]);
     }
   }
@@ -91,7 +88,7 @@ function NewItemForm({ addItem }) {
               <form className="NewItemForm-form" onSubmit={handleSubmit}>
                 <label htmlFor="NewItemForm-type">
                   Type of Item:
-                  </label>
+                </label>
                 <select
                   className="NewItemForm-type"
                   name="type"
@@ -103,7 +100,7 @@ function NewItemForm({ addItem }) {
                 </select>
                 <label htmlFor="NewItemForm-name">
                   Name:
-                  </label>
+                </label>
                 <input
                   onChange={handleChange}
                   id="NewItemForm-name"
@@ -114,7 +111,7 @@ function NewItemForm({ addItem }) {
                 />
                 <label htmlFor="NewItemForm-recipe">
                   Recipe:
-                  </label>
+                </label>
                 <input
                   onChange={handleChange}
                   id="NewItemForm-recipe"
@@ -125,7 +122,7 @@ function NewItemForm({ addItem }) {
                 />
                 <label htmlFor="NewItemForm-description">
                   Description:
-                  </label>
+                </label>
                 <input
                   onChange={handleChange}
                   id="NewItemForm-description"
@@ -136,7 +133,7 @@ function NewItemForm({ addItem }) {
                 />
                 <label htmlFor="NewItemForm-serving-instructions">
                   Serving Instructions:
-                  </label>
+                </label>
                 <input
                   onChange={handleChange}
                   id="NewItemForm-serving-instructions"
@@ -147,14 +144,14 @@ function NewItemForm({ addItem }) {
                 />
                 <Button type="submit">Add Item!</Button>
               </form>
-              {errors.map(error => <Error error={error} />)}
+              {errors.map((error, idx) => <Error key={idx} error={error} />)}
             </CardBody>
           </Card>
         </div>
         <div className="col-1 col-sm-2 col-lg-4"></div>
       </div>
     </div >
-  )
+  );
 
 }
 
