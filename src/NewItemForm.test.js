@@ -65,6 +65,37 @@ it("displays a form to add a new item", async function () {
   expect(form).toContainHTML('<label for="NewItemForm-type">Type of Item:</label>');
 });
 
+it("displays shows error message if type isn't selected upon submission", async function () {
+  await act(async () => {
+    render(
+      <MemoryRouter>
+        <NewItemForm addItem={fakeData.placeholderFunction} />
+      </MemoryRouter>,
+      container
+    );
+  });
+  const form = container.querySelector(".NewItemForm-form");
+
+  const nameInput = container.querySelector("#NewItemForm-name");
+  const recipeInput = container.querySelector("#NewItemForm-recipe");
+  const descriptionInput = container.querySelector("#NewItemForm-description");
+  const servingInsInput = container.querySelector("#NewItemForm-serving-instructions");
+
+  await act(async () => {
+    fireEvent.input(nameInput, { target: { value: fakeData.newSnack.name } });
+    fireEvent.input(recipeInput, { target: { value: fakeData.newSnack.recipe } });
+    fireEvent.input(descriptionInput, { target: { value: fakeData.newSnack.description } });
+    fireEvent.input(servingInsInput, { target: { value: fakeData.newSnack.serve } });
+
+    fireEvent.submit(form);
+  });
+
+  const error = container.querySelector(".Error");
+  expect(container).toContainElement(form);
+  expect(form).toContainHTML(fakeData.newSnack.name);
+  expect(error).toContainHTML("Please ensure an item type is selected.");
+});
+
 it("displays user input as it changes", async function () {
   await act(async () => {
     render(
