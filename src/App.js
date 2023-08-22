@@ -4,7 +4,6 @@ import "./App.css";
 import SnackOrBoozeApi from "./Api";
 import NavBar from "./NavBar";
 import RoutesList from "./RoutesList";
-import Error from "./Error";
 
 /** App
  *
@@ -15,8 +14,6 @@ import Error from "./Error";
  * - isLoading: boolean
  * - snacks: array of objects [{id, name, description, recipe, serve}...]
  * - drinks: array of objects [{id, name, description, recipe, serve}...]
- * - fetchSnacksError: null or ""
- * - fetchDrinksError: null or ""
  *
  * App --> NavBar, Routes
  */
@@ -24,8 +21,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [snacks, setSnacks] = useState([]);
   const [drinks, setDrinks] = useState([]);
-  const [fetchSnacksError, setFetchSnacksError] = useState(null);
-  const [fetchDrinksError, setFetchDrinksError] = useState(null);
 
   //Grabs all of the snacks after first render, updates snacks state
   useEffect(() => {
@@ -33,10 +28,8 @@ function App() {
       try {
         let snacks = await SnackOrBoozeApi.getItems("snacks");
         setSnacks(snacks);
-        setFetchSnacksError(null);
       } catch (err) {
-        console.log(err);
-        setFetchSnacksError(err);
+        console.error(err);
       }
     }
     fetchSnacks();
@@ -49,11 +42,10 @@ function App() {
         let drinks = await SnackOrBoozeApi.getItems("drinks");
         setDrinks(drinks);
         setIsLoading(false);
-        setFetchDrinksError(null);
         /** Only want to set isLoading to false in this effect since it
          * should be the last to run.*/
       } catch (err) {
-        setFetchDrinksError(err);
+        console.error(err);
       }
     }
     fetchDrinks();
@@ -84,8 +76,6 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <main>
-          {fetchSnacksError && <Error error={fetchSnacksError} />}
-          {fetchDrinksError && <Error error={fetchDrinksError} />}
           <RoutesList
             drinks={drinks}
             snacks={snacks}

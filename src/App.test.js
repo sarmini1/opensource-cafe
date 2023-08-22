@@ -11,7 +11,7 @@ let container = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
-  console.log(document);
+  // console.log(document);
   document.body.appendChild(container);
 });
 
@@ -42,10 +42,10 @@ it("matches snapshot", async function () {
 
 it("renders menu data", async () => {
   const mockGetItems =
-  jest
-  .spyOn(SnackOrBoozeApi, "getItems")
-  .mockImplementationOnce(() => Promise.resolve(testSnacks))
-  .mockImplementationOnce(() => Promise.resolve(testDrinks));
+    jest
+      .spyOn(SnackOrBoozeApi, "getItems")
+      .mockImplementationOnce(() => Promise.resolve(testSnacks))
+      .mockImplementationOnce(() => Promise.resolve(testDrinks));
 
   // Use the asynchronous version of act to apply resolved promises
   await act(async () => {
