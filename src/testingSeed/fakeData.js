@@ -38,13 +38,22 @@ const newSnack = {
   "description": "New snack description.",
   "recipe": "Just have fun out there.",
   "serve": "All day"
-}
+};
 
-const placeholderFunction = () => {};
+const newDrink = {
+  "id": "new-drink",
+  "name": "New Drink!",
+  "description": "New drink description.",
+  "recipe": "Just have fun out there.",
+  "serve": "All day"
+};
+
+const placeholderFunction = () => { };
 
 export {
   testDrinks,
   testSnacks,
   placeholderFunction,
-  newSnack
+  newSnack,
+  newDrink
 };

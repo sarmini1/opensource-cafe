@@ -88,7 +88,7 @@ it("displays user input as it changes", async function () {
 
 });
 
-it("submits successfully with valid inputs", async function () {
+it("submits new snack successfully with valid inputs", async function () {
 
   // mock functions called in the effect that runs after App renders
   jest
@@ -120,10 +120,10 @@ it("submits successfully with valid inputs", async function () {
 
   await act(async () => {
     fireEvent.change(typeInput, { target: { value: 'snack' } });
-    fireEvent.input(nameInput, { target: { value: 'test name input' } });
-    fireEvent.input(recipeInput, { target: { value: 'test recipe input' } });
-    fireEvent.input(descriptionInput, { target: { value: 'test description input' } });
-    fireEvent.input(servingInsInput, { target: { value: 'test serving ins input' } });
+    fireEvent.input(nameInput, { target: { value: fakeData.newSnack.name } });
+    fireEvent.input(recipeInput, { target: { value: fakeData.newSnack.recipe } });
+    fireEvent.input(descriptionInput, { target: { value: fakeData.newSnack.description } });
+    fireEvent.input(servingInsInput, { target: { value: fakeData.newSnack.serve } });
 
     fireEvent.submit(form);
   });
@@ -134,25 +134,48 @@ it("submits successfully with valid inputs", async function () {
   expect(container).not.toContainElement(form);
 });
 
+it("submits new drink successfully with valid inputs", async function () {
 
-  // const { container } = render(
-  //   <MemoryRouter initialEntries={["/add"]}>
-  //     <Routes>
-  //       <Route
-  //         path="/snacks"
-  //         element={
-  //           <CafeMenu
-  //             type="snacks"
-  //             items={fakeData.testSnacks}
-  //             title="Snacks"
-  //           />}
-  //       >
-  //       </Route>
-  //       <Route
-  //         path="/add"
-  //         element={<NewItemForm addItem={fakeData.placeholderFunction} />}
-  //       >
-  //       </Route>
-  //     </Routes>
-  //   </MemoryRouter>
-  // );
+  // mock functions called in the effect that runs after App renders
+  jest
+    .spyOn(SnackOrBoozeApi, "getItems")
+    .mockImplementationOnce(() => Promise.resolve(fakeData.testSnacks))
+    .mockImplementationOnce(() => Promise.resolve(fakeData.testDrinks));
+
+  // mock axios call inside add item function that runs when form is submitted
+  const mockAddItem =
+    jest
+      .spyOn(SnackOrBoozeApi, "addItem")
+      .mockImplementationOnce(() => Promise.resolve(fakeData.newDrink));
+
+  await act(async () => {
+    render(<App />, container);
+  });
+
+  const newItemFormLink = container.querySelector('.NavLink-new-item');
+  fireEvent.click(newItemFormLink);
+
+  const form = container.querySelector(".NewItemForm-form");
+  expect(container).toContainElement(form);
+
+  const typeInput = container.querySelector(".NewItemForm-type");
+  const nameInput = container.querySelector("#NewItemForm-name");
+  const recipeInput = container.querySelector("#NewItemForm-recipe");
+  const descriptionInput = container.querySelector("#NewItemForm-description");
+  const servingInsInput = container.querySelector("#NewItemForm-serving-instructions");
+
+  await act(async () => {
+    fireEvent.change(typeInput, { target: { value: 'drink' } });
+    fireEvent.input(nameInput, { target: { value: fakeData.newDrink.name } });
+    fireEvent.input(recipeInput, { target: { value: fakeData.newDrink.recipe } });
+    fireEvent.input(descriptionInput, { target: { value: fakeData.newDrink.description } });
+    fireEvent.input(servingInsInput, { target: { value: fakeData.newDrink.serve } });
+
+    fireEvent.submit(form);
+  });
+
+  expect(mockAddItem).toHaveBeenCalledTimes(1);
+  expect(container).toContainHTML('Please enjoy some of our drinks listed below!');
+  expect(container).toContainHTML('New Drink!');
+  expect(container).not.toContainElement(form);
+});
