@@ -17,12 +17,13 @@ const testSnacks = [
     "description": "Sure to impress your vegan friends!",
     "recipe": "Purchase one container of hummus.",
     "serve": "Place unceremoniously on the table, along with pita bread."
-  }];
+  }
+];
 
   it('mounts without crashing', function () {
     render(<MemoryRouter><CafeMenu type={"snacks"} items={testSnacks} title={"Snacks"}/></MemoryRouter>);
   });
-  
+
   it("matches snapshot", function () {
     const {debug, container} = render(<MemoryRouter><CafeMenu type="snacks" items={testSnacks} title="Snacks"/></MemoryRouter>);
     debug(container);
