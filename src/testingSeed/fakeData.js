@@ -48,12 +48,24 @@ const newDrink = {
   "serve": "All day"
 };
 
-const placeholderFunction = () => { };
+const fakeError = {
+  response: {
+    config: {
+      url: "nope.com"
+    },
+    request: {
+      status: "nope status"
+    }
+  }
+};
+
+const placeholderFunction = () => {};
 
 export {
   testDrinks,
   testSnacks,
   placeholderFunction,
   newSnack,
-  newDrink
+  newDrink,
+  fakeError
 };
