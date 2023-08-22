@@ -210,3 +210,51 @@ it("submits new drink successfully with valid inputs", async function () {
   expect(container).toContainHTML('New Drink!');
   expect(container).not.toContainElement(form);
 });
+
+it("handles errors from API upon submission", async function () {
+
+  // mock functions called in the effect that runs after App renders
+  jest
+    .spyOn(SnackOrBoozeApi, "getItems")
+    .mockImplementationOnce(() => Promise.resolve(fakeData.testSnacks))
+    .mockImplementationOnce(() => Promise.resolve(fakeData.testDrinks));
+
+  // mock axios call inside add item function that runs when form is submitted
+  const mockAddItem =
+    jest
+      .spyOn(SnackOrBoozeApi, "addItem")
+      .mockImplementationOnce(() => Promise.reject(fakeData.newDrink));
+
+  await act(async () => {
+    render(<App />, container);
+  });
+
+  const newItemFormLink = container.querySelector('.NavLink-new-item');
+  fireEvent.click(newItemFormLink);
+
+  const form = container.querySelector(".NewItemForm-form");
+  expect(container).toContainElement(form);
+
+  const typeInput = container.querySelector(".NewItemForm-type");
+  const nameInput = container.querySelector("#NewItemForm-name");
+  const recipeInput = container.querySelector("#NewItemForm-recipe");
+  const descriptionInput = container.querySelector("#NewItemForm-description");
+  const servingInsInput = container.querySelector("#NewItemForm-serving-instructions");
+
+  await act(async () => {
+    fireEvent.change(typeInput, { target: { value: 'drink' } });
+    fireEvent.input(nameInput, { target: { value: fakeData.newDrink.name } });
+    fireEvent.input(recipeInput, { target: { value: fakeData.newDrink.recipe } });
+    fireEvent.input(descriptionInput, { target: { value: fakeData.newDrink.description } });
+    fireEvent.input(servingInsInput, { target: { value: fakeData.newDrink.serve } });
+
+    fireEvent.submit(form);
+  });
+
+  const error = container.querySelector(".Error");
+
+  expect(mockAddItem).toHaveBeenCalledTimes(1);
+  expect(container).toContainElement(form);
+  expect(form).toContainHTML(fakeData.newDrink.name);
+  expect(error).toContainHTML("Couldn't add new item to DB.");
+});

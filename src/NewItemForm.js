@@ -33,7 +33,8 @@ const initialFormData = {
 function NewItemForm({ addItem }) {
 
   const [newItemFormData, setNewItemFormData] = useState(initialFormData);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
+  const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
   // Updates newItemFormData when a change event occurs
@@ -58,20 +59,22 @@ function NewItemForm({ addItem }) {
   // addItem() function passed from App.
   async function handleSubmit(evt) {
     evt.preventDefault();
-    setError(null);
+    setErrors([]);
 
     //Fail fast and check that a valid type was selected
     if (!newItemFormData.type || newItemFormData.type === "default") {
-      setError("Please ensure an item type is selected.");
+      // setError("Please ensure an item type is selected.");
+      setErrors(errs => [...errs, "Please ensure an item type is selected."]);
       return;
     }
 
     try {
       await addItem(newItemFormData);
-      setError(null);
+      setErrors([]);
       navigate(`/${newItemFormData.type}s`)
     } catch (err) {
-      setError(err);
+      // setError(err);
+      setErrors(errs => [...errs, "Couldn't add new item to DB."]);
     }
   }
 
@@ -144,7 +147,7 @@ function NewItemForm({ addItem }) {
                 />
                 <Button type="submit">Add Item!</Button>
               </form>
-              {error && <Error error={error} />}
+              {errors.map(error => <Error error={error} />)}
             </CardBody>
           </Card>
         </div>
