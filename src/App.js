@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import SnackOrBoozeApi from "./Api";
 import NavBar from "./NavBar";
 import RoutesList from "./RoutesList";
+import Error from "./Error";
 
 /** App
  *
@@ -21,6 +22,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [snacks, setSnacks] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [errors, setErrors] = useState([]);
 
   //Grabs all of the snacks after first render, updates snacks state
   useEffect(() => {
@@ -30,6 +32,7 @@ function App() {
         setSnacks(snacks);
       } catch (err) {
         console.error(err);
+        setErrors(errs => [...errs, err]);
       }
     }
     fetchSnacks();
@@ -46,6 +49,7 @@ function App() {
          * should be the last to run.*/
       } catch (err) {
         console.error(err);
+        setErrors(errs => [...errs, err]);
       }
     }
     fetchDrinks();
@@ -61,10 +65,34 @@ function App() {
       setDrinks(currDrinks => [...currDrinks, addedItem]);
       setIsLoading(false);
     }
-    else if (item.type === "snack") {
+    // if not a drink, it must be a snack
+    else {
       setSnacks(currSnacks => [...currSnacks, addedItem]);
       setIsLoading(false);
     }
+  }
+
+  // Note: the homepage needs drinks and snacks to have been fetched successfully
+  // as it displays the number of each, so we need to be sure that route does
+  // not get rendered if an error has occurred while fetching this data.
+  if (errors.length > 0) {
+    return (
+      <div className="App">
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+            <Route
+              path="*"
+              element={
+                <div>
+                  {errors.map(err => <Error error={err} />)}
+                </div>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    );
   }
 
   if (isLoading) {

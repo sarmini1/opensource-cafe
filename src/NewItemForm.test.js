@@ -30,7 +30,7 @@ it('mounts without crashing', async function () {
   await act(async () => {
     render(
       <MemoryRouter>
-        <NewItemForm addItem={fakeData.placeholderFunction} />
+        <NewItemForm addItem={() => { }} />
       </MemoryRouter>,
       container
     );
@@ -41,7 +41,7 @@ it("matches snapshot", async function () {
   await act(async () => {
     render(
       <MemoryRouter>
-        <NewItemForm addItem={fakeData.placeholderFunction} />
+        <NewItemForm addItem={() => { }} />
       </MemoryRouter>,
       container
     );
@@ -54,7 +54,7 @@ it("displays a form to add a new item", async function () {
   await act(async () => {
     render(
       <MemoryRouter>
-        <NewItemForm addItem={fakeData.placeholderFunction} />
+        <NewItemForm addItem={() => { }} />
       </MemoryRouter>,
       container
     );
@@ -69,7 +69,7 @@ it("displays shows error message if type isn't selected upon submission", async 
   await act(async () => {
     render(
       <MemoryRouter>
-        <NewItemForm addItem={fakeData.placeholderFunction} />
+        <NewItemForm addItem={() => { }} />
       </MemoryRouter>,
       container
     );
@@ -100,7 +100,7 @@ it("displays user input as it changes", async function () {
   await act(async () => {
     render(
       <MemoryRouter>
-        <NewItemForm addItem={fakeData.placeholderFunction} />
+        <NewItemForm addItem={() => { }} />
       </MemoryRouter>,
       container
     );

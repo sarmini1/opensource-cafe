@@ -59,12 +59,9 @@ const fakeError = {
   }
 };
 
-const placeholderFunction = () => {};
-
 export {
   testDrinks,
   testSnacks,
-  placeholderFunction,
   newSnack,
   newDrink,
   fakeError
